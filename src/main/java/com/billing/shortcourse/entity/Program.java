@@ -5,12 +5,11 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name = "departments")
+@Table(name = "programs")
 @Data
-public class Department {
+public class Program {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +18,10 @@ public class Department {
     @Column(length = 100)
     private String name;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dept_id")
+    private Department department;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -26,7 +29,4 @@ public class Department {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    // ✅ One Department has many Programs
-    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
-    private List<Program> programs;
 }
