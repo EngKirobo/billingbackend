@@ -9,8 +9,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 @EnableMethodSecurity  // ✅ ADD HERE
 @ComponentScan(basePackages = {
     "com.billing.auth",      // your auth module
-    "com.billing.hostel"   // ← Add this line
-    // "com.billing.shortcourse",
+    "com.billing.hostel",  // ← Add this line
+    "com.billing.shortcourse"
     // "com.billing.driving",
     // add other modules if any
 })
