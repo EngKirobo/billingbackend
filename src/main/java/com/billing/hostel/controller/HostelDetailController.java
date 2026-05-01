@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api/hostel-details")
 @EnableMethodSecurity  // ✅ VERY IMPORTANT
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+// @CrossOrigin(origins = "http://localhost:4200")
 public class HostelDetailController {
 
     private final HostelDetailService hostelDetailService;
