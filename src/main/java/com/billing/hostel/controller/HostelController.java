@@ -19,32 +19,32 @@ public class HostelController {
     private final HostelService hostelService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('HOSTEL_READ')")
+    @PreAuthorize("hasAuthority('ROOMS_READ')")
     public ResponseEntity<List<HostelResponse>> getAll() {
         return ResponseEntity.ok(hostelService.getAll());
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('HOSTEL_READ')")
+    @PreAuthorize("hasAuthority('ROOMS_READ')")
     public ResponseEntity<HostelResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(hostelService.getById(id));
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('HOSTEL_CREATE')")
+    @PreAuthorize("hasAuthority('ROOMS_CREATE')")
     public ResponseEntity<HostelResponse> create(@RequestBody HostelRequest request) {
         return ResponseEntity.ok(hostelService.create(request));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('HOSTEL_UPDATE')")
+    @PreAuthorize("hasAuthority('ROOMS_UPDATE')")
     public ResponseEntity<HostelResponse> update(@PathVariable Long id, 
                                                  @RequestBody HostelRequest request) {
         return ResponseEntity.ok(hostelService.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('HOSTEL_DELETE')")
+    @PreAuthorize("hasAuthority('ROOMS_DELETE')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         hostelService.delete(id);
         return ResponseEntity.noContent().build();
