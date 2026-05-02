@@ -20,9 +20,11 @@ public class HostelDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hostel_id", nullable = false)
-    private Hostel hostel;
+    @Column(name = "gender_id", nullable = false)
+    private Integer genderId;
+
+    @Column(name = "hostel_id", nullable = false)
+    private Long hostelId;
 
     @Column(nullable = false, length = 255)
     private String name;
@@ -33,8 +35,7 @@ public class HostelDetail {
     @Column(name = "intake_id", nullable = false)
     private Integer intakeId;
 
-    @Column(name = "gender_id", nullable = false)
-    private Integer genderId;
+
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

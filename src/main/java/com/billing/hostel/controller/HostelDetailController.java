@@ -6,55 +6,53 @@ import com.billing.hostel.service.HostelDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/hostel-details")
-@EnableMethodSecurity  // ✅ VERY IMPORTANT
+@RequestMapping("/api/hosteldetails")
 @RequiredArgsConstructor
-// @CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class HostelDetailController {
 
-    private final HostelDetailService hostelDetailService;
+    private final HostelDetailService service;
 
-    @GetMapping
-    @PreAuthorize("hasAuthority('HOSTEL_DETAIL_READ')")
-    public ResponseEntity<List<HostelDetailResponse>> getAll() {
-        return ResponseEntity.ok(hostelDetailService.getAll());
-    }
-
-    @GetMapping("/hostel/{hostelId}")
-    @PreAuthorize("hasAuthority('HOSTEL_DETAIL_READ')")
-    public ResponseEntity<List<HostelDetailResponse>> getByHostelId(@PathVariable Long hostelId) {
-        return ResponseEntity.ok(hostelDetailService.getByHostelId(hostelId));
-    }
-
-    @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('HOSTEL_DETAIL_READ')")
-    public ResponseEntity<HostelDetailResponse> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(hostelDetailService.getById(id));
-    }
-
+    // CREATE
     @PostMapping
-    @PreAuthorize("hasAuthority('HOSTEL_DETAIL_CREATE')")
+    @PreAuthorize("hasAuthority('ROOMS_CREATE')")
     public ResponseEntity<HostelDetailResponse> create(@RequestBody HostelDetailRequest request) {
-        return ResponseEntity.ok(hostelDetailService.create(request));
+        return ResponseEntity.ok(service.create(request));
     }
 
+    // READ ALL
+    @GetMapping
+    @PreAuthorize("hasAuthority('ROOMS_READ')")
+    public ResponseEntity<List<HostelDetailResponse>> getAll() {
+        return ResponseEntity.ok(service.getAll());
+    }
+
+    // READ BY ID
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROOMS_READ')")
+    public ResponseEntity<HostelDetailResponse> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getById(id));
+    }
+
+    // UPDATE
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('HOSTEL_DETAIL_UPDATE')")
-    public ResponseEntity<HostelDetailResponse> update(@PathVariable Long id, 
-                                                       @RequestBody HostelDetailRequest request) {
-        return ResponseEntity.ok(hostelDetailService.update(id, request));
+    @PreAuthorize("hasAuthority('ROOMS_UPDATE')")
+    public ResponseEntity<HostelDetailResponse> update(
+            @PathVariable Long id,
+            @RequestBody HostelDetailRequest request) {
+        return ResponseEntity.ok(service.update(id, request));
     }
 
+    // DELETE
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('HOSTEL_DETAIL_DELETE')")
+    @PreAuthorize("hasAuthority('ROOMS_DELETE')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        hostelDetailService.delete(id);
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
