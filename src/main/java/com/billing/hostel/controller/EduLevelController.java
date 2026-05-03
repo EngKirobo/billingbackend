@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/edu-levels")
+@RequestMapping("/api/edulevels")
 @RequiredArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EduLevelController {
 
     private final EduLevelService eduLevelService;
 
     // 🔒 CREATE
-    @PreAuthorize("hasAuthority('USER_UPDATE')")
+    @PreAuthorize("hasAuthority('ROOMS_UPDATE')")
     @PostMapping
     public EduLevel create(@RequestBody EduLevelRequest request) {
         return eduLevelService.create(request);
@@ -37,14 +37,14 @@ public class EduLevelController {
     }
 
     // 🔒 UPDATE
-    @PreAuthorize("hasAuthority('USER_UPDATE')")
+    @PreAuthorize("hasAuthority('ROOMS_UPDATE')")
     @PutMapping("/{id}")
     public EduLevel update(@PathVariable Long id,@RequestBody EduLevelRequest request) {
         return eduLevelService.update(id, request);
     }
 
     // 🔒 DELETE
-    @PreAuthorize("hasAuthority('USER_UPDATE')")
+    @PreAuthorize("hasAuthority('ROOMS_UPDATE')")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         eduLevelService.delete(id);
