@@ -1,51 +1,54 @@
 package com.billing.shortcourse.controller;
 
-import com.billing.shortcourse.dto.StudentRequest;
-import com.billing.shortcourse.dto.StudentResponse;
+import com.billing.shortcourse.dto.StudentDTO;
+import com.billing.shortcourse.entity.Student;
 import com.billing.shortcourse.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/students")
-@EnableMethodSecurity  // ✅ VERY IMPORTANT
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class StudentController {
 
     private final StudentService studentService;
 
-    @PreAuthorize("hasAuthority('STUDENTS_CREATE')")
-    @PostMapping
-    public StudentResponse create(@RequestBody StudentRequest request) {
-        return studentService.create(request);
-    }
-
-    @PreAuthorize("hasAuthority('STUDENTS_READ')")
     @GetMapping
-    public List<StudentResponse> getAll() {
-        return studentService.getAll();
+    @PreAuthorize("hasAuthority('STUDENT_READ') or hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<List<Student>> getAll() {
+        return ResponseEntity.ok(studentService.getAllStudents());
     }
 
-    @PreAuthorize("hasAuthority('STUDENTS_READ')")
     @GetMapping("/{id}")
-    public StudentResponse getById(@PathVariable Integer id) {
-        return studentService.getById(id);
+    @PreAuthorize("hasAuthority('STUDENT_READ') or hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<Student> getById(@PathVariable Integer id) {
+        return ResponseEntity.ok(studentService.getStudentById(id));
     }
 
-    @PreAuthorize("hasAuthority('STUDENTS_UPDATE')")
+    @PostMapping
+    @PreAuthorize("hasAuthority('STUDENT_CREATE') or hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<Student> create(@RequestBody StudentDTO dto) {
+        Student saved = studentService.createStudent(dto);
+        return new ResponseEntity<>(saved, HttpStatus.CREATED);
+    }
+
     @PutMapping("/{id}")
-    public StudentResponse update(@PathVariable Integer id,
-                                  @RequestBody StudentRequest request) {
-        return studentService.update(id, request);
+    @PreAuthorize("hasAuthority('STUDENT_UPDATE') or hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<Student> update(@PathVariable Integer id, @RequestBody StudentDTO dto) {
+        Student updated = studentService.updateStudent(id, dto);
+        return ResponseEntity.ok(updated);
     }
 
-    @PreAuthorize("hasAuthority('STUDENTS_DELETE')")
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
-        studentService.delete(id);
+    @PreAuthorize("hasAuthority('STUDENT_DELETE') or hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        studentService.deleteStudent(id);
+        return ResponseEntity.noContent().build();
     }
 }

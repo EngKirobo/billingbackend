@@ -26,7 +26,5 @@ public class Department {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-    // ✅ One Department has many Programs
-    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
-    private List<Program> programs;
+ 
 }

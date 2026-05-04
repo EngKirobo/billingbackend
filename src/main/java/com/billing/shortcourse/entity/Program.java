@@ -18,9 +18,8 @@ public class Program {
     @Column(length = 100)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dept_id")
-    private Department department;
+    @Column(name = "dept_id")
+    private Integer deptId;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

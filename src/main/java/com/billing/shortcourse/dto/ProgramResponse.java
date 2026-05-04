@@ -15,13 +15,9 @@ import com.billing.shortcourse.entity.Program;
 public class ProgramResponse {
     private Integer id;
     private String name;
-    // private DepartmentResponse department; // Nested response for clarity
+    private Integer deptId;
+    //private DepartmentResponse department; // Nested response for clarity
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public interface ProgramRepository extends JpaRepository<Program, Integer> {
-
-    @Query("SELECT p FROM Program p JOIN FETCH p.department")
-    List<Program> findAllPrograms();
-}
 }

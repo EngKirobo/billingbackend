@@ -1,7 +1,7 @@
 package com.billing.shortcourse.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -10,11 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "students")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Data
 public class Student {
 
     @Id
@@ -24,29 +20,31 @@ public class Student {
     @Column(nullable = false, length = 150)
     private String name;
 
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(length = 50)
     private String admino;
 
+    @Column(length = 100)
     private String email;
+
+    @Column(length = 100)
     private String country;
 
     private LocalDate dob;
+    
+    @Column(name = "gender_id")
+    private Integer genderId;
 
-@Column(name = "entry_id")
-private Integer entryId;
+    @Column(name = "entry_id")
+    private Integer entryId;
 
-@Column(name = "gender_id")
-private Integer genderId;
+    @Column(name = "program_id")
+    private Integer programId;
 
-@Column(name = "intake_id")
-private Integer intakeId;
+    @Column(name = "intake_id")
+    private Integer intakeId;
 
+    @Column(length = 20)
     private String telephone;
-
-    // ✅ Relationship with Program
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "program_id")
-    private Program program;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -56,3 +54,4 @@ private Integer intakeId;
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }
+
