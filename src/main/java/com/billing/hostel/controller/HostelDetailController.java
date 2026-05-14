@@ -41,7 +41,7 @@ public class HostelDetailController {
 
     // UPDATE
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROOMS_UPDATE')")
+    @PreAuthorize("hasAuthority('ROOMS_READ')")
     public ResponseEntity<HostelDetailResponse> update(
             @PathVariable Long id,
             @RequestBody HostelDetailRequest request) {

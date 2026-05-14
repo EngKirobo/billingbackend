@@ -36,7 +36,7 @@ public class ProgramController {
 
     // CREATE
     @PostMapping
-    @PreAuthorize("hasAuthority('USER_CREATE')")
+    @PreAuthorize("hasAuthority('USER_READ')")
     public ResponseEntity<ProgramResponse> create(@RequestBody ProgramRequest request) {
         return new ResponseEntity<>(programService.save(request), HttpStatus.CREATED);
     }

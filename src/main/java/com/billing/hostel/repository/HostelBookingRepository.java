@@ -7,7 +7,10 @@ import java.util.Optional;
 
 public interface HostelBookingRepository extends JpaRepository<HostelBooking, Integer> {
 
-    Optional<HostelBooking> findByStudentIdAndAcademicYearAndSemester(
-            Integer studentId, String academicYear, String semester
+    boolean existsByStudentIdAndAcademicYearAndSemester(
+        Integer studentId,
+        String academicYear,
+        String semester
     );
+
 }

@@ -26,7 +26,7 @@ public class DepartmentController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('USER_CREATE')")
+    @PreAuthorize("hasAuthority('USER_READ')")
     public ResponseEntity<DepartmentResponse> create(@RequestBody DepartmentRequest request) {
         return ResponseEntity.ok(departmentService.save(request));
     }

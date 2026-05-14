@@ -9,11 +9,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "hostelbookings",
-       uniqueConstraints = @UniqueConstraint(
-               name = "hostelbookings_stud_id_academic_year_semester_unique",
-               columnNames = {"stud_id", "academic_year", "semester"}
-       ))
+@Table(name = "hostelbookings")
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,11 +21,6 @@ public class HostelBooking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    // // ✅ Room relation (same module)
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "room_id", nullable = false)
-    // private Room room;
 
     @Column(name = "room_id", nullable = false)
     private Integer roomId;

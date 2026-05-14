@@ -18,7 +18,7 @@ public class HostelBookingController {
 
     private final HostelBookingService bookingService;
 
-    @PreAuthorize("hasAuthority('ROOM_CREATE')")
+    @PreAuthorize("hasAuthority('ROOMS_READ')")
     @PostMapping
     public HostelBookingResponse create(@RequestBody HostelBookingRequest request) {
         return bookingService.create(request);
