@@ -17,7 +17,24 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
 
     @Override
-    public PaymentResponseDTO createPayment(PaymentRequestDTO dto) {
+    public PaymentResponseDTO createPayment(
+            PaymentRequestDTO dto
+    ) {
+
+        // CHECK DUPLICATE
+        if (
+            dto.getControlNumber() != null &&
+            !dto.getControlNumber().trim().isEmpty() &&
+            paymentRepository.existsByControlNumber(
+                    dto.getControlNumber()
+            )
+        ) {
+
+            throw new RuntimeException(
+                    "Control Number already exists"
+            );
+
+        }
 
         Payment payment = Payment.builder()
                 .hostelbookingId(dto.getHostelbookingId())
@@ -25,7 +42,10 @@ public class PaymentServiceImpl implements PaymentService {
                 .status(dto.getStatus())
                 .build();
 
-        return mapToDTO(paymentRepository.save(payment));
+        return mapToDTO(
+                paymentRepository.save(payment)
+        );
+
     }
 
     @Override
@@ -44,17 +64,49 @@ public class PaymentServiceImpl implements PaymentService {
         return mapToDTO(payment);
     }
 
-    @Override
-    public PaymentResponseDTO updatePayment(Integer id, PaymentRequestDTO dto) {
+   @Override
+    public PaymentResponseDTO updatePayment(
+            Integer id,
+            PaymentRequestDTO dto
+    ) {
 
         Payment payment = paymentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Payment not found"));
+                .orElseThrow(() ->
+                        new RuntimeException("Payment not found"));
 
-        payment.setHostelbookingId(dto.getHostelbookingId());
-        payment.setControlNumber(dto.getControlNumber());
-        payment.setStatus(dto.getStatus());
+        // CHECK DUPLICATE CONTROL NUMBER
+        if (
+            dto.getControlNumber() != null &&
+            !dto.getControlNumber().trim().isEmpty() &&
+            paymentRepository.existsByControlNumberAndIdNot(
+                    dto.getControlNumber(),
+                    id
+            )
+        ) {
 
-        return mapToDTO(paymentRepository.save(payment));
+            throw new RuntimeException(
+                    "Control Number already exists"
+            );
+
+        }
+
+        payment.setHostelbookingId(
+                dto.getHostelbookingId()
+        );
+
+        payment.setControlNumber(
+                dto.getControlNumber()
+        );
+
+        payment.setStatus(
+                dto.getStatus()
+        );
+
+
+        return mapToDTO(
+                paymentRepository.save(payment)
+        );
+
     }
 
     @Override

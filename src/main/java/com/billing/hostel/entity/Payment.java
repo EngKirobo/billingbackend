@@ -6,7 +6,15 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "payments")
+@Table(
+    name = "payments",
+    uniqueConstraints = {
+        @UniqueConstraint(
+            name = "uk_controlnumber",
+            columnNames = "controlnumber"
+        )
+    }
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,7 +29,7 @@ public class Payment {
     @Column(name = "hostelbooking_id", nullable = false)
     private Long hostelbookingId;
 
-    @Column(name = "controlnumber", length = 20)
+    @Column(name = "ControlNumber", length = 20, unique = true)
     private String controlNumber;
 
     @Column(name = "payment_date")
