@@ -20,19 +20,19 @@ public class DepartmentController {
     private final DepartmentService departmentService;
 
     @GetMapping
-    @PreAuthorize("hasAuthority('USER_READ')")
+    @PreAuthorize("hasAuthority('DEPT_READ')")
     public ResponseEntity<List<DepartmentResponse>> getAll() {
         return ResponseEntity.ok(departmentService.getAll());
     }
 
     @PostMapping
-    @PreAuthorize("hasAuthority('USER_READ')")
+    @PreAuthorize("hasAuthority('DEPT_CREATE')")
     public ResponseEntity<DepartmentResponse> create(@RequestBody DepartmentRequest request) {
         return ResponseEntity.ok(departmentService.save(request));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('USER_UPDATE')")
+    @PreAuthorize("hasAuthority('DEPT_UPDATE')")
     public ResponseEntity<DepartmentResponse> update(@PathVariable Integer id, @RequestBody DepartmentRequest request) {
         return ResponseEntity.ok(departmentService.update(id, request));
     }

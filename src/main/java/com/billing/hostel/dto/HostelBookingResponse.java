@@ -19,6 +19,7 @@ public class HostelBookingResponse {
 
     private Boolean verified;
     private Boolean allowed;
+    private Boolean ctn;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

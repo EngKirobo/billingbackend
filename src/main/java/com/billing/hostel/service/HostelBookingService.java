@@ -29,29 +29,6 @@ public class HostelBookingService {
         );
     }
 
-    // ✅ CREATE
-//     public HostelBookingResponse create(HostelBookingRequest request) {
-
-//         // Validate Room exists
-//         roomRepository.findById(request.getRoomId())
-//                 .orElseThrow(() -> new RuntimeException("Room not found with ID: " + request.getRoomId()));
-
-//         // Validate Student exists
-//         studentRepository.findById(request.getStudentId())
-//                 .orElseThrow(() -> new RuntimeException("Student not found with ID: " + request.getStudentId()));
-
-//         HostelBooking booking = HostelBooking.builder()
-//                 .roomId(request.getRoomId())
-//                 .studentId(request.getStudentId())
-//                 .academicYear(request.getAcademicYear())
-//                 .semester(request.getSemester())
-//                 .verified(request.getVerified() != null ? request.getVerified() : false)
-//                 .allowed(request.getAllowed() != null ? request.getAllowed() : false)
-//                 .build();
-
-//         HostelBooking savedBooking = bookingRepository.save(booking);
-//         return mapToResponse(savedBooking);
-//     }
 
 public HostelBookingResponse create(HostelBookingRequest request) {
 
@@ -62,11 +39,7 @@ public HostelBookingResponse create(HostelBookingRequest request) {
         request.getSemester()
     );
 
-//     if (exists) {
-//         throw new RuntimeException(
-//             "This student already has a booking for this academic year and semester"
-//         );
-//     }
+
 
 if (exists) {
     throw new ResponseStatusException(
@@ -88,6 +61,7 @@ if (exists) {
             .studentId(request.getStudentId())
             .academicYear(request.getAcademicYear())
             .semester(request.getSemester())
+            .ctn(request.getCtn() != null ? request.getCtn() : false)
             .verified(request.getVerified() != null ? request.getVerified() : false)
             .allowed(request.getAllowed() != null ? request.getAllowed() : false)
             .build();
@@ -131,6 +105,7 @@ if (exists) {
         booking.setStudentId(request.getStudentId());
         booking.setAcademicYear(request.getAcademicYear());
         booking.setSemester(request.getSemester());
+        booking.setCtn(request.getCtn() != null ? request.getCtn() : booking.getCtn());
         booking.setVerified(request.getVerified() != null ? request.getVerified() : booking.getVerified());
         booking.setAllowed(request.getAllowed() != null ? request.getAllowed() : booking.getAllowed());
 
@@ -156,6 +131,7 @@ if (exists) {
                 .semester(b.getSemester())
                 .verified(b.getVerified())
                 .allowed(b.getAllowed())
+                .ctn(b.getCtn())
                 .createdAt(b.getCreatedAt())
                 .updatedAt(b.getUpdatedAt())
                 .build();

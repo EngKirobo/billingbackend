@@ -1,6 +1,6 @@
 package com.billing.hostel.entity;
 
-import com.billing.shortcourse.entity.Student;
+// import com.billing.shortcourse.entity.Student;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,6 +37,7 @@ public class HostelBooking {
 
     private Boolean verified;
     private Boolean allowed;
+    private Boolean ctn;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

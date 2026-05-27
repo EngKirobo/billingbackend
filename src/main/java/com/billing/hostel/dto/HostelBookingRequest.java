@@ -21,4 +21,5 @@ public class HostelBookingRequest {
 
     private Boolean verified;
     private Boolean allowed;
+    private Boolean ctn;
 }
